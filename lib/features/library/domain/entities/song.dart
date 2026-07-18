@@ -13,6 +13,9 @@ class Song {
     this.bitrate,
     this.sampleRate,
     this.artworkPath,
+    this.artworkHash,
+    this.dateModified,
+    this.fileSize,
     required this.playCount,
     this.lastPlayed,
     required this.dateAdded,
@@ -31,6 +34,9 @@ class Song {
   final int? bitrate;
   final int? sampleRate;
   final String? artworkPath;
+  final String? artworkHash;
+  final DateTime? dateModified;
+  final int? fileSize;
   final int playCount;
   final DateTime? lastPlayed;
   final DateTime dateAdded;
@@ -53,6 +59,9 @@ class Song {
           bitrate == other.bitrate &&
           sampleRate == other.sampleRate &&
           artworkPath == other.artworkPath &&
+          artworkHash == other.artworkHash &&
+          dateModified == other.dateModified &&
+          fileSize == other.fileSize &&
           playCount == other.playCount &&
           lastPlayed == other.lastPlayed &&
           dateAdded == other.dateAdded;
@@ -72,12 +81,15 @@ class Song {
       bitrate.hashCode ^
       sampleRate.hashCode ^
       artworkPath.hashCode ^
+      artworkHash.hashCode ^
+      dateModified.hashCode ^
+      fileSize.hashCode ^
       playCount.hashCode ^
       lastPlayed.hashCode ^
       dateAdded.hashCode;
 
   @override
   String toString() {
-    return 'Song{id: $id, title: $title, albumId: $albumId, artistId: $artistId, filePath: $filePath, duration: $duration, trackNumber: $trackNumber, discNumber: $discNumber, genre: $genre, year: $year, bitrate: $bitrate, sampleRate: $sampleRate, artworkPath: $artworkPath, playCount: $playCount, lastPlayed: $lastPlayed, dateAdded: $dateAdded}';
+    return 'Song{id: $id, title: $title, albumId: $albumId, artistId: $artistId, filePath: $filePath, duration: $duration, trackNumber: $trackNumber, discNumber: $discNumber, genre: $genre, year: $year, bitrate: $bitrate, sampleRate: $sampleRate, artworkPath: $artworkPath, artworkHash: $artworkHash, dateModified: $dateModified, fileSize: $fileSize, playCount: $playCount, lastPlayed: $lastPlayed, dateAdded: $dateAdded}';
   }
 }

@@ -773,6 +773,39 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, SongModel> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _artworkHashMeta = const VerificationMeta(
+    'artworkHash',
+  );
+  @override
+  late final GeneratedColumn<String> artworkHash = GeneratedColumn<String>(
+    'artwork_hash',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dateModifiedMeta = const VerificationMeta(
+    'dateModified',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateModified = GeneratedColumn<DateTime>(
+    'date_modified',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _fileSizeMeta = const VerificationMeta(
+    'fileSize',
+  );
+  @override
+  late final GeneratedColumn<int> fileSize = GeneratedColumn<int>(
+    'file_size',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _playCountMeta = const VerificationMeta(
     'playCount',
   );
@@ -823,6 +856,9 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, SongModel> {
     bitrate,
     sampleRate,
     artworkPath,
+    artworkHash,
+    dateModified,
+    fileSize,
     playCount,
     lastPlayed,
     dateAdded,
@@ -928,6 +964,30 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, SongModel> {
         ),
       );
     }
+    if (data.containsKey('artwork_hash')) {
+      context.handle(
+        _artworkHashMeta,
+        artworkHash.isAcceptableOrUnknown(
+          data['artwork_hash']!,
+          _artworkHashMeta,
+        ),
+      );
+    }
+    if (data.containsKey('date_modified')) {
+      context.handle(
+        _dateModifiedMeta,
+        dateModified.isAcceptableOrUnknown(
+          data['date_modified']!,
+          _dateModifiedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('file_size')) {
+      context.handle(
+        _fileSizeMeta,
+        fileSize.isAcceptableOrUnknown(data['file_size']!, _fileSizeMeta),
+      );
+    }
     if (data.containsKey('play_count')) {
       context.handle(
         _playCountMeta,
@@ -1007,6 +1067,18 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, SongModel> {
         DriftSqlType.string,
         data['${effectivePrefix}artwork_path'],
       ),
+      artworkHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}artwork_hash'],
+      ),
+      dateModified: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_modified'],
+      ),
+      fileSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}file_size'],
+      ),
       playCount: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}play_count'],
@@ -1042,6 +1114,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
   final int? bitrate;
   final int? sampleRate;
   final String? artworkPath;
+  final String? artworkHash;
+  final DateTime? dateModified;
+  final int? fileSize;
   final int playCount;
   final DateTime? lastPlayed;
   final DateTime dateAdded;
@@ -1059,6 +1134,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
     this.bitrate,
     this.sampleRate,
     this.artworkPath,
+    this.artworkHash,
+    this.dateModified,
+    this.fileSize,
     required this.playCount,
     this.lastPlayed,
     required this.dateAdded,
@@ -1096,6 +1174,15 @@ class SongModel extends DataClass implements Insertable<SongModel> {
     }
     if (!nullToAbsent || artworkPath != null) {
       map['artwork_path'] = Variable<String>(artworkPath);
+    }
+    if (!nullToAbsent || artworkHash != null) {
+      map['artwork_hash'] = Variable<String>(artworkHash);
+    }
+    if (!nullToAbsent || dateModified != null) {
+      map['date_modified'] = Variable<DateTime>(dateModified);
+    }
+    if (!nullToAbsent || fileSize != null) {
+      map['file_size'] = Variable<int>(fileSize);
     }
     map['play_count'] = Variable<int>(playCount);
     if (!nullToAbsent || lastPlayed != null) {
@@ -1136,6 +1223,15 @@ class SongModel extends DataClass implements Insertable<SongModel> {
       artworkPath: artworkPath == null && nullToAbsent
           ? const Value.absent()
           : Value(artworkPath),
+      artworkHash: artworkHash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(artworkHash),
+      dateModified: dateModified == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dateModified),
+      fileSize: fileSize == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fileSize),
       playCount: Value(playCount),
       lastPlayed: lastPlayed == null && nullToAbsent
           ? const Value.absent()
@@ -1163,6 +1259,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
       bitrate: serializer.fromJson<int?>(json['bitrate']),
       sampleRate: serializer.fromJson<int?>(json['sampleRate']),
       artworkPath: serializer.fromJson<String?>(json['artworkPath']),
+      artworkHash: serializer.fromJson<String?>(json['artworkHash']),
+      dateModified: serializer.fromJson<DateTime?>(json['dateModified']),
+      fileSize: serializer.fromJson<int?>(json['fileSize']),
       playCount: serializer.fromJson<int>(json['playCount']),
       lastPlayed: serializer.fromJson<DateTime?>(json['lastPlayed']),
       dateAdded: serializer.fromJson<DateTime>(json['dateAdded']),
@@ -1185,6 +1284,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
       'bitrate': serializer.toJson<int?>(bitrate),
       'sampleRate': serializer.toJson<int?>(sampleRate),
       'artworkPath': serializer.toJson<String?>(artworkPath),
+      'artworkHash': serializer.toJson<String?>(artworkHash),
+      'dateModified': serializer.toJson<DateTime?>(dateModified),
+      'fileSize': serializer.toJson<int?>(fileSize),
       'playCount': serializer.toJson<int>(playCount),
       'lastPlayed': serializer.toJson<DateTime?>(lastPlayed),
       'dateAdded': serializer.toJson<DateTime>(dateAdded),
@@ -1205,6 +1307,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
     Value<int?> bitrate = const Value.absent(),
     Value<int?> sampleRate = const Value.absent(),
     Value<String?> artworkPath = const Value.absent(),
+    Value<String?> artworkHash = const Value.absent(),
+    Value<DateTime?> dateModified = const Value.absent(),
+    Value<int?> fileSize = const Value.absent(),
     int? playCount,
     Value<DateTime?> lastPlayed = const Value.absent(),
     DateTime? dateAdded,
@@ -1222,6 +1327,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
     bitrate: bitrate.present ? bitrate.value : this.bitrate,
     sampleRate: sampleRate.present ? sampleRate.value : this.sampleRate,
     artworkPath: artworkPath.present ? artworkPath.value : this.artworkPath,
+    artworkHash: artworkHash.present ? artworkHash.value : this.artworkHash,
+    dateModified: dateModified.present ? dateModified.value : this.dateModified,
+    fileSize: fileSize.present ? fileSize.value : this.fileSize,
     playCount: playCount ?? this.playCount,
     lastPlayed: lastPlayed.present ? lastPlayed.value : this.lastPlayed,
     dateAdded: dateAdded ?? this.dateAdded,
@@ -1249,6 +1357,13 @@ class SongModel extends DataClass implements Insertable<SongModel> {
       artworkPath: data.artworkPath.present
           ? data.artworkPath.value
           : this.artworkPath,
+      artworkHash: data.artworkHash.present
+          ? data.artworkHash.value
+          : this.artworkHash,
+      dateModified: data.dateModified.present
+          ? data.dateModified.value
+          : this.dateModified,
+      fileSize: data.fileSize.present ? data.fileSize.value : this.fileSize,
       playCount: data.playCount.present ? data.playCount.value : this.playCount,
       lastPlayed: data.lastPlayed.present
           ? data.lastPlayed.value
@@ -1273,6 +1388,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
           ..write('bitrate: $bitrate, ')
           ..write('sampleRate: $sampleRate, ')
           ..write('artworkPath: $artworkPath, ')
+          ..write('artworkHash: $artworkHash, ')
+          ..write('dateModified: $dateModified, ')
+          ..write('fileSize: $fileSize, ')
           ..write('playCount: $playCount, ')
           ..write('lastPlayed: $lastPlayed, ')
           ..write('dateAdded: $dateAdded')
@@ -1295,6 +1413,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
     bitrate,
     sampleRate,
     artworkPath,
+    artworkHash,
+    dateModified,
+    fileSize,
     playCount,
     lastPlayed,
     dateAdded,
@@ -1316,6 +1437,9 @@ class SongModel extends DataClass implements Insertable<SongModel> {
           other.bitrate == this.bitrate &&
           other.sampleRate == this.sampleRate &&
           other.artworkPath == this.artworkPath &&
+          other.artworkHash == this.artworkHash &&
+          other.dateModified == this.dateModified &&
+          other.fileSize == this.fileSize &&
           other.playCount == this.playCount &&
           other.lastPlayed == this.lastPlayed &&
           other.dateAdded == this.dateAdded);
@@ -1335,6 +1459,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
   final Value<int?> bitrate;
   final Value<int?> sampleRate;
   final Value<String?> artworkPath;
+  final Value<String?> artworkHash;
+  final Value<DateTime?> dateModified;
+  final Value<int?> fileSize;
   final Value<int> playCount;
   final Value<DateTime?> lastPlayed;
   final Value<DateTime> dateAdded;
@@ -1353,6 +1480,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
     this.bitrate = const Value.absent(),
     this.sampleRate = const Value.absent(),
     this.artworkPath = const Value.absent(),
+    this.artworkHash = const Value.absent(),
+    this.dateModified = const Value.absent(),
+    this.fileSize = const Value.absent(),
     this.playCount = const Value.absent(),
     this.lastPlayed = const Value.absent(),
     this.dateAdded = const Value.absent(),
@@ -1372,6 +1502,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
     this.bitrate = const Value.absent(),
     this.sampleRate = const Value.absent(),
     this.artworkPath = const Value.absent(),
+    this.artworkHash = const Value.absent(),
+    this.dateModified = const Value.absent(),
+    this.fileSize = const Value.absent(),
     this.playCount = const Value.absent(),
     this.lastPlayed = const Value.absent(),
     this.dateAdded = const Value.absent(),
@@ -1394,6 +1527,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
     Expression<int>? bitrate,
     Expression<int>? sampleRate,
     Expression<String>? artworkPath,
+    Expression<String>? artworkHash,
+    Expression<DateTime>? dateModified,
+    Expression<int>? fileSize,
     Expression<int>? playCount,
     Expression<DateTime>? lastPlayed,
     Expression<DateTime>? dateAdded,
@@ -1413,6 +1549,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
       if (bitrate != null) 'bitrate': bitrate,
       if (sampleRate != null) 'sample_rate': sampleRate,
       if (artworkPath != null) 'artwork_path': artworkPath,
+      if (artworkHash != null) 'artwork_hash': artworkHash,
+      if (dateModified != null) 'date_modified': dateModified,
+      if (fileSize != null) 'file_size': fileSize,
       if (playCount != null) 'play_count': playCount,
       if (lastPlayed != null) 'last_played': lastPlayed,
       if (dateAdded != null) 'date_added': dateAdded,
@@ -1434,6 +1573,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
     Value<int?>? bitrate,
     Value<int?>? sampleRate,
     Value<String?>? artworkPath,
+    Value<String?>? artworkHash,
+    Value<DateTime?>? dateModified,
+    Value<int?>? fileSize,
     Value<int>? playCount,
     Value<DateTime?>? lastPlayed,
     Value<DateTime>? dateAdded,
@@ -1453,6 +1595,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
       bitrate: bitrate ?? this.bitrate,
       sampleRate: sampleRate ?? this.sampleRate,
       artworkPath: artworkPath ?? this.artworkPath,
+      artworkHash: artworkHash ?? this.artworkHash,
+      dateModified: dateModified ?? this.dateModified,
+      fileSize: fileSize ?? this.fileSize,
       playCount: playCount ?? this.playCount,
       lastPlayed: lastPlayed ?? this.lastPlayed,
       dateAdded: dateAdded ?? this.dateAdded,
@@ -1502,6 +1647,15 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
     if (artworkPath.present) {
       map['artwork_path'] = Variable<String>(artworkPath.value);
     }
+    if (artworkHash.present) {
+      map['artwork_hash'] = Variable<String>(artworkHash.value);
+    }
+    if (dateModified.present) {
+      map['date_modified'] = Variable<DateTime>(dateModified.value);
+    }
+    if (fileSize.present) {
+      map['file_size'] = Variable<int>(fileSize.value);
+    }
     if (playCount.present) {
       map['play_count'] = Variable<int>(playCount.value);
     }
@@ -1533,6 +1687,9 @@ class SongsCompanion extends UpdateCompanion<SongModel> {
           ..write('bitrate: $bitrate, ')
           ..write('sampleRate: $sampleRate, ')
           ..write('artworkPath: $artworkPath, ')
+          ..write('artworkHash: $artworkHash, ')
+          ..write('dateModified: $dateModified, ')
+          ..write('fileSize: $fileSize, ')
           ..write('playCount: $playCount, ')
           ..write('lastPlayed: $lastPlayed, ')
           ..write('dateAdded: $dateAdded, ')
@@ -3238,6 +3395,9 @@ typedef $$SongsTableCreateCompanionBuilder =
       Value<int?> bitrate,
       Value<int?> sampleRate,
       Value<String?> artworkPath,
+      Value<String?> artworkHash,
+      Value<DateTime?> dateModified,
+      Value<int?> fileSize,
       Value<int> playCount,
       Value<DateTime?> lastPlayed,
       Value<DateTime> dateAdded,
@@ -3258,6 +3418,9 @@ typedef $$SongsTableUpdateCompanionBuilder =
       Value<int?> bitrate,
       Value<int?> sampleRate,
       Value<String?> artworkPath,
+      Value<String?> artworkHash,
+      Value<DateTime?> dateModified,
+      Value<int?> fileSize,
       Value<int> playCount,
       Value<DateTime?> lastPlayed,
       Value<DateTime> dateAdded,
@@ -3401,6 +3564,21 @@ class $$SongsTableFilterComposer extends Composer<_$AppDatabase, $SongsTable> {
 
   ColumnFilters<String> get artworkPath => $composableBuilder(
     column: $table.artworkPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get artworkHash => $composableBuilder(
+    column: $table.artworkHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateModified => $composableBuilder(
+    column: $table.dateModified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3580,6 +3758,21 @@ class $$SongsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get artworkHash => $composableBuilder(
+    column: $table.artworkHash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateModified => $composableBuilder(
+    column: $table.dateModified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get playCount => $composableBuilder(
     column: $table.playCount,
     builder: (column) => ColumnOrderings(column),
@@ -3691,6 +3884,19 @@ class $$SongsTableAnnotationComposer
     column: $table.artworkPath,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get artworkHash => $composableBuilder(
+    column: $table.artworkHash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get dateModified => $composableBuilder(
+    column: $table.dateModified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get fileSize =>
+      $composableBuilder(column: $table.fileSize, builder: (column) => column);
 
   GeneratedColumn<int> get playCount =>
       $composableBuilder(column: $table.playCount, builder: (column) => column);
@@ -3846,6 +4052,9 @@ class $$SongsTableTableManager
                 Value<int?> bitrate = const Value.absent(),
                 Value<int?> sampleRate = const Value.absent(),
                 Value<String?> artworkPath = const Value.absent(),
+                Value<String?> artworkHash = const Value.absent(),
+                Value<DateTime?> dateModified = const Value.absent(),
+                Value<int?> fileSize = const Value.absent(),
                 Value<int> playCount = const Value.absent(),
                 Value<DateTime?> lastPlayed = const Value.absent(),
                 Value<DateTime> dateAdded = const Value.absent(),
@@ -3864,6 +4073,9 @@ class $$SongsTableTableManager
                 bitrate: bitrate,
                 sampleRate: sampleRate,
                 artworkPath: artworkPath,
+                artworkHash: artworkHash,
+                dateModified: dateModified,
+                fileSize: fileSize,
                 playCount: playCount,
                 lastPlayed: lastPlayed,
                 dateAdded: dateAdded,
@@ -3884,6 +4096,9 @@ class $$SongsTableTableManager
                 Value<int?> bitrate = const Value.absent(),
                 Value<int?> sampleRate = const Value.absent(),
                 Value<String?> artworkPath = const Value.absent(),
+                Value<String?> artworkHash = const Value.absent(),
+                Value<DateTime?> dateModified = const Value.absent(),
+                Value<int?> fileSize = const Value.absent(),
                 Value<int> playCount = const Value.absent(),
                 Value<DateTime?> lastPlayed = const Value.absent(),
                 Value<DateTime> dateAdded = const Value.absent(),
@@ -3902,6 +4117,9 @@ class $$SongsTableTableManager
                 bitrate: bitrate,
                 sampleRate: sampleRate,
                 artworkPath: artworkPath,
+                artworkHash: artworkHash,
+                dateModified: dateModified,
+                fileSize: fileSize,
                 playCount: playCount,
                 lastPlayed: lastPlayed,
                 dateAdded: dateAdded,

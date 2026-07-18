@@ -50,6 +50,9 @@ class Songs extends Table {
   IntColumn get bitrate => integer().nullable()();
   IntColumn get sampleRate => integer().nullable()();
   TextColumn get artworkPath => text().nullable()();
+  TextColumn get artworkHash => text().nullable()();
+  DateTimeColumn get dateModified => dateTime().nullable()();
+  IntColumn get fileSize => integer().nullable()();
   IntColumn get playCount => integer().withDefault(const Constant(0))();
   DateTimeColumn get lastPlayed => dateTime().nullable()();
   DateTimeColumn get dateAdded => dateTime().withDefault(currentDateAndTime)();

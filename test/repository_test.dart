@@ -2,7 +2,6 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:aash_player/core/database/app_database.dart';
 import 'package:aash_player/features/library/data/repositories/library_repository_impl.dart';
-import 'package:aash_player/features/library/domain/entities/song.dart';
 import 'package:aash_player/features/playlists/data/repositories/playlist_repository_impl.dart';
 
 void main() {
@@ -52,8 +51,8 @@ void main() {
             ),
           );
 
-      // 3. Insert Song
       const songId = 'song_1';
+      final now = DateTime(2026, 7, 18, 12, 0, 0);
       final songModel = SongModel(
         id: songId,
         title: 'Test Song',
@@ -61,7 +60,11 @@ void main() {
         artistId: artistId,
         filePath: '/music/test_song.mp3',
         duration: 180000, // 3 minutes
-        dateAdded: DateTime.now(),
+        artworkPath: '/cached/artwork.jpg',
+        artworkHash: 'sha256hash',
+        dateModified: now,
+        fileSize: 1024 * 1024 * 5, // 5MB
+        dateAdded: now,
         playCount: 0,
       );
       await database.into(database.songs).insert(songModel);
@@ -72,6 +75,10 @@ void main() {
       expect(songs.first.id, songId);
       expect(songs.first.title, 'Test Song');
       expect(songs.first.duration, const Duration(minutes: 3));
+      expect(songs.first.artworkPath, '/cached/artwork.jpg');
+      expect(songs.first.artworkHash, 'sha256hash');
+      expect(songs.first.dateModified, now);
+      expect(songs.first.fileSize, 1024 * 1024 * 5);
 
       final artists = await libraryRepository.getAllArtists();
       expect(artists, hasLength(1));
