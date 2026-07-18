@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final _libraryNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'library');
-final _playlistsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'playlists');
+final _playlistsNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: 'playlists',
+);
 final _searchNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'search');
 final _settingsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'settings');
 
@@ -24,7 +26,9 @@ Widget _buildPlaceholder(String title) {
 class AppRouter {
   AppRouter._();
 
-  static GoRouter getRouter(Widget Function(BuildContext, StatefulNavigationShell) shellBuilder) {
+  static GoRouter getRouter(
+    Widget Function(BuildContext, StatefulNavigationShell) shellBuilder,
+  ) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
       initialLocation: '/',
@@ -48,7 +52,8 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/library',
-                  builder: (context, state) => _buildPlaceholder('Library Screen'),
+                  builder: (context, state) =>
+                      _buildPlaceholder('Library Screen'),
                 ),
               ],
             ),
@@ -57,7 +62,8 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/playlists',
-                  builder: (context, state) => _buildPlaceholder('Playlists Screen'),
+                  builder: (context, state) =>
+                      _buildPlaceholder('Playlists Screen'),
                 ),
               ],
             ),
@@ -66,7 +72,8 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/search',
-                  builder: (context, state) => _buildPlaceholder('Search Screen'),
+                  builder: (context, state) =>
+                      _buildPlaceholder('Search Screen'),
                 ),
               ],
             ),
@@ -75,7 +82,8 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/settings',
-                  builder: (context, state) => _buildPlaceholder('Settings Screen'),
+                  builder: (context, state) =>
+                      _buildPlaceholder('Settings Screen'),
                 ),
               ],
             ),

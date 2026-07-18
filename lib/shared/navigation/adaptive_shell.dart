@@ -5,10 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:window_manager/window_manager.dart';
 
 class AdaptiveShell extends StatelessWidget {
-  const AdaptiveShell({
-    super.key,
-    required this.navigationShell,
-  });
+  const AdaptiveShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
@@ -39,10 +36,7 @@ class AdaptiveShell extends StatelessWidget {
   // Mobile Layout: Bottom Nav Bar + Full Screen content
   Widget _buildMobileLayout(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Aash Player'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Aash Player'), centerTitle: true),
       body: Column(
         children: [
           Expanded(child: navigationShell),
@@ -54,11 +48,31 @@ class AdaptiveShell extends StatelessWidget {
         onTap: _onNavigate,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.library_music_outlined), activeIcon: Icon(Icons.library_music), label: 'Library'),
-          BottomNavigationBarItem(icon: Icon(Icons.playlist_play), activeIcon: Icon(Icons.playlist_play), label: 'Playlists'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), activeIcon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), activeIcon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_music_outlined),
+            activeIcon: Icon(Icons.library_music),
+            label: 'Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.playlist_play),
+            activeIcon: Icon(Icons.playlist_play),
+            label: 'Playlists',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            activeIcon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
     );
@@ -74,11 +88,31 @@ class AdaptiveShell extends StatelessWidget {
             onDestinationSelected: _onNavigate,
             labelType: NavigationRailLabelType.selected,
             destinations: const [
-              NavigationRailDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: Text('Home')),
-              NavigationRailDestination(icon: Icon(Icons.library_music_outlined), selectedIcon: Icon(Icons.library_music), label: Text('Library')),
-              NavigationRailDestination(icon: Icon(Icons.playlist_play), selectedIcon: Icon(Icons.playlist_play), label: Text('Playlists')),
-              NavigationRailDestination(icon: Icon(Icons.search), selectedIcon: Icon(Icons.search), label: Text('Search')),
-              NavigationRailDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: Text('Settings')),
+              NavigationRailDestination(
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: Text('Home'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.library_music_outlined),
+                selectedIcon: Icon(Icons.library_music),
+                label: Text('Library'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.playlist_play),
+                selectedIcon: Icon(Icons.playlist_play),
+                label: Text('Playlists'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.search),
+                selectedIcon: Icon(Icons.search),
+                label: Text('Search'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.settings_outlined),
+                selectedIcon: Icon(Icons.settings),
+                label: Text('Settings'),
+              ),
             ],
           ),
           const VerticalDivider(thickness: 1, width: 1),
@@ -105,7 +139,7 @@ class AdaptiveShell extends StatelessWidget {
         children: [
           // Windows Window Titlebar Frame
           if (!kIsWeb && Platform.isWindows) const _WindowsTitleBar(),
-          
+
           Expanded(
             child: Row(
               children: [
@@ -120,7 +154,9 @@ class AdaptiveShell extends StatelessWidget {
                         padding: const EdgeInsets.all(24.0),
                         child: Text(
                           'Aash Player',
-                          style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       _SidebarItem(
@@ -162,13 +198,13 @@ class AdaptiveShell extends StatelessWidget {
                   ),
                 ),
                 const VerticalDivider(thickness: 1, width: 1),
-                
+
                 // Central Content Area
                 Expanded(child: navigationShell),
               ],
             ),
           ),
-          
+
           // Persistent Bottom Player controls
           _buildPersistentPlayer(context),
         ],
@@ -203,8 +239,16 @@ class AdaptiveShell extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('No Track Selected', style: TextStyle(fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
-                Text('Aash Player', style: TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis),
+                Text(
+                  'No Track Selected',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  'Aash Player',
+                  style: TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),
@@ -247,7 +291,10 @@ class AdaptiveShell extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('No Track Selected', style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        'No Track Selected',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       Text('Aash Player', style: TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -255,7 +302,7 @@ class AdaptiveShell extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Player Controls
           Expanded(
             flex: 5,
@@ -265,15 +312,27 @@ class AdaptiveShell extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(icon: const Icon(Icons.shuffle), onPressed: () {}),
-                    IconButton(icon: const Icon(Icons.skip_previous, size: 28), onPressed: () {}),
+                    IconButton(
+                      icon: const Icon(Icons.shuffle),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.skip_previous, size: 28),
+                      onPressed: () {},
+                    ),
                     IconButton(
                       icon: const Icon(Icons.play_circle_fill, size: 40),
                       onPressed: () {},
                       color: theme.colorScheme.primary,
                     ),
-                    IconButton(icon: const Icon(Icons.skip_next, size: 28), onPressed: () {}),
-                    IconButton(icon: const Icon(Icons.repeat), onPressed: () {}),
+                    IconButton(
+                      icon: const Icon(Icons.skip_next, size: 28),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.repeat),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -282,12 +341,7 @@ class AdaptiveShell extends StatelessWidget {
                   child: Row(
                     children: [
                       Text('0:00', style: TextStyle(fontSize: 11)),
-                      Expanded(
-                        child: Slider(
-                          value: 0.0,
-                          onChanged: null,
-                        ),
-                      ),
+                      Expanded(child: Slider(value: 0.0, onChanged: null)),
                       Text('0:00', style: TextStyle(fontSize: 11)),
                     ],
                   ),
@@ -295,21 +349,21 @@ class AdaptiveShell extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Extra Actions (Volume, Queue)
           Expanded(
             flex: 3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(icon: const Icon(Icons.queue_music), onPressed: () {}),
+                IconButton(
+                  icon: const Icon(Icons.queue_music),
+                  onPressed: () {},
+                ),
                 IconButton(icon: const Icon(Icons.volume_up), onPressed: () {}),
                 const SizedBox(
                   width: 100,
-                  child: Slider(
-                    value: 0.8,
-                    onChanged: null,
-                  ),
+                  child: Slider(value: 0.8, onChanged: null),
                 ),
               ],
             ),
@@ -347,21 +401,27 @@ class _SidebarItem extends StatelessWidget {
           height: 48,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: isSelected ? theme.colorScheme.secondaryContainer : Colors.transparent,
+            color: isSelected
+                ? theme.colorScheme.secondaryContainer
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             children: [
               Icon(
                 isSelected ? activeIcon : icon,
-                color: isSelected ? theme.colorScheme.onSecondaryContainer : theme.colorScheme.onSurface,
+                color: isSelected
+                    ? theme.colorScheme.onSecondaryContainer
+                    : theme.colorScheme.onSurface,
               ),
               const SizedBox(width: 16),
               Text(
                 label,
                 style: TextStyle(
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? theme.colorScheme.onSecondaryContainer : theme.colorScheme.onSurface,
+                  color: isSelected
+                      ? theme.colorScheme.onSecondaryContainer
+                      : theme.colorScheme.onSurface,
                 ),
               ),
             ],
@@ -392,7 +452,13 @@ class _WindowsTitleBar extends StatelessWidget {
                   children: [
                     Icon(Icons.music_note, size: 16),
                     SizedBox(width: 8),
-                    Text('Aash Player', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+                    Text(
+                      'Aash Player',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
               ),

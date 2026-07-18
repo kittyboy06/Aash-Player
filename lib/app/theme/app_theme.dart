@@ -25,8 +25,10 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     double? cardBorderRadius,
   }) {
     return AppThemeExtension(
-      acrylicBackgroundColor: acrylicBackgroundColor ?? this.acrylicBackgroundColor,
-      sidebarBackgroundColor: sidebarBackgroundColor ?? this.sidebarBackgroundColor,
+      acrylicBackgroundColor:
+          acrylicBackgroundColor ?? this.acrylicBackgroundColor,
+      sidebarBackgroundColor:
+          sidebarBackgroundColor ?? this.sidebarBackgroundColor,
       playerControlHeight: playerControlHeight ?? this.playerControlHeight,
       spacingScale: spacingScale ?? this.spacingScale,
       cardBorderRadius: cardBorderRadius ?? this.cardBorderRadius,
@@ -37,13 +39,25 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   AppThemeExtension lerp(ThemeExtension<AppThemeExtension>? other, double t) {
     if (other is! AppThemeExtension) return this;
     return AppThemeExtension(
-      acrylicBackgroundColor: Color.lerp(acrylicBackgroundColor, other.acrylicBackgroundColor, t)!,
-      sidebarBackgroundColor: Color.lerp(sidebarBackgroundColor, other.sidebarBackgroundColor, t)!,
-      playerControlHeight: Color.lerp(const Color(0x00000000), const Color(0x00000000), t) == null
+      acrylicBackgroundColor: Color.lerp(
+        acrylicBackgroundColor,
+        other.acrylicBackgroundColor,
+        t,
+      )!,
+      sidebarBackgroundColor: Color.lerp(
+        sidebarBackgroundColor,
+        other.sidebarBackgroundColor,
+        t,
+      )!,
+      playerControlHeight:
+          Color.lerp(const Color(0x00000000), const Color(0x00000000), t) ==
+              null
           ? other.playerControlHeight
-          : (playerControlHeight + (other.playerControlHeight - playerControlHeight) * t),
+          : (playerControlHeight +
+                (other.playerControlHeight - playerControlHeight) * t),
       spacingScale: spacingScale + (other.spacingScale - spacingScale) * t,
-      cardBorderRadius: cardBorderRadius + (other.cardBorderRadius - cardBorderRadius) * t,
+      cardBorderRadius:
+          cardBorderRadius + (other.cardBorderRadius - cardBorderRadius) * t,
     );
   }
 }
@@ -55,7 +69,8 @@ class AppTheme {
 
   // Dynamic light theme base configurations
   static ThemeData getLightTheme(ColorScheme? dynamicColorScheme) {
-    final colorScheme = dynamicColorScheme ??
+    final colorScheme =
+        dynamicColorScheme ??
         ColorScheme.fromSeed(
           seedColor: _primaryColor,
           brightness: Brightness.light,
@@ -79,7 +94,8 @@ class AppTheme {
 
   // Dynamic dark theme base configurations
   static ThemeData getDarkTheme(ColorScheme? dynamicColorScheme) {
-    final colorScheme = dynamicColorScheme ??
+    final colorScheme =
+        dynamicColorScheme ??
         ColorScheme.fromSeed(
           seedColor: _primaryColor,
           brightness: Brightness.dark,
