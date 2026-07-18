@@ -1,5 +1,6 @@
 import '../../../library/domain/entities/song.dart';
 import '../entities/playback_event.dart';
+import '../entities/playback_snapshot.dart';
 
 abstract class PlaybackRepository {
   /// Opens a track for playback.
@@ -23,4 +24,7 @@ abstract class PlaybackRepository {
 
   /// Reactive stream broadcasting all playback status and position updates.
   Stream<PlaybackEvent> get eventStream;
+
+  /// Retrieves the current snapshot state of the player.
+  PlaybackSnapshot get currentSnapshot;
 }
