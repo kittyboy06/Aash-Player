@@ -49,6 +49,9 @@ dependencies:
   uuid: ^4.6.0
   path: ^1.9.1
   sqlite3: ^2.9.4
+  audio_service: ^0.18.19
+  audio_session: ^0.2.4
+  audio_service_win: ^0.0.3
 
 dev_dependencies:
   flutter_test:

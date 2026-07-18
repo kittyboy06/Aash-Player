@@ -5,7 +5,6 @@ import 'package:aash_player/features/playback/data/repositories/playback_reposit
 import 'package:aash_player/features/playback/data/services/playback_platform_service.dart';
 import 'package:aash_player/features/playback/domain/entities/playback_event.dart';
 import 'package:aash_player/features/playback/domain/entities/playback_state.dart';
-import 'package:aash_player/features/playback/domain/failures/playback_failure.dart';
 
 final dummySong = Song(
   id: 'song1',
@@ -40,8 +39,8 @@ class MockPlaybackPlatformService implements PlaybackPlatformService {
   }
 
   @override
-  Future<void> open(String filePath) async {
-    openedFilePath = filePath;
+  Future<void> open(Song song) async {
+    openedFilePath = song.filePath;
     stateController.add(PlaybackStateLoading(dummySong));
   }
 

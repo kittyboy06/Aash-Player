@@ -1,11 +1,12 @@
+import '../../../library/domain/entities/song.dart';
 import '../../domain/entities/playback_state.dart';
 
 abstract class PlaybackPlatformService {
   /// Initializes native platform bindings.
   Future<void> initialize();
 
-  /// Opens a track for playback using the file path.
-  Future<void> open(String filePath);
+  /// Opens a track for playback using the Song details.
+  Future<void> open(Song song);
 
   /// Starts or resumes audio playback.
   Future<void> play();

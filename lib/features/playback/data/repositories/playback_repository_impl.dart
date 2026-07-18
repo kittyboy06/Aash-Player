@@ -10,11 +10,15 @@ import '../../domain/failures/playback_failure.dart';
 import '../../domain/repositories/playback_repository.dart';
 import '../services/playback_platform_service.dart';
 
+import '../services/android_playback_service.dart';
+import '../services/windows_playback_service.dart';
+
 part 'playback_repository_impl.g.dart';
 
 class PlaybackRepositoryImpl implements PlaybackRepository {
   PlaybackRepositoryImpl({PlaybackPlatformService? platformService}) {
     _service = platformService ?? _resolvePlatformService();
+    _service.initialize();
     _initStreams();
   }
 
@@ -24,13 +28,9 @@ class PlaybackRepositoryImpl implements PlaybackRepository {
   final List<StreamSubscription<dynamic>> _subscriptions = [];
 
   static PlaybackPlatformService _resolvePlatformService() {
-    // Note: Concrete Windows/Android platform service instantiation will be linked
-    // when we write the concrete classes in TSK-403 / TSK-404.
-    // For now, if we are running in tests or unsupported platforms, return a mock/placeholder.
-    // In production:
-    // if (Platform.isWindows) return WindowsPlaybackService();
-    // if (Platform.isAndroid) return AndroidPlaybackService();
-    throw UnimplementedError('Platform playback service not linked yet');
+    if (Platform.isWindows) return WindowsPlaybackService();
+    if (Platform.isAndroid) return AndroidPlaybackService();
+    throw UnimplementedError('Platform playback service not supported');
   }
 
   void _initStreams() {
@@ -131,7 +131,7 @@ class PlaybackRepositoryImpl implements PlaybackRepository {
   Future<void> open(Song song) async {
     _transitionTo(PlaybackStatePreparing(song));
     try {
-      await _service.open(song.filePath);
+      await _service.open(song);
     } catch (e) {
       _transitionTo(
         PlaybackStateError(
